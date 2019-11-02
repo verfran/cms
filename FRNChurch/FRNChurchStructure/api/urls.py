@@ -1,12 +1,13 @@
 from django.urls import path, include
-from . import views
+from .views import GroupView, GroupChildrenView, GroupPathView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('Group', views.GroupView)
+router.register('Group', GroupView)
 
 urlpatterns = [
 	path('', include(router.urls)),
-	path('ChildrenGroup/<int:parent_id>', views.ChildrenGroupView.as_view()),
+	path('GroupChildren/<int:parent_id>', GroupChildrenView.as_view()),
+	path('GroupPath/<int:id>', GroupPathView.as_view()),
 ]
 

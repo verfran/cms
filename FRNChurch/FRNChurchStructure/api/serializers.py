@@ -6,7 +6,12 @@ class GroupSerializer(serializers.ModelSerializer):
 		model = Group
 		fields = ('id', 'name', 'type', 'parentGroup')
 
-class ChildrenGroupSerializer(serializers.ModelSerializer):
+class GroupChildrenSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Group
+		fields = ('id', 'name', 'type')
+
+class GroupPathSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Group
 		fields = ('id', 'name', 'type')
