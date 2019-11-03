@@ -19,9 +19,12 @@ class GroupPathView(generics.ListAPIView):
 	serializer_class = GroupPathSerializer
 
 	def getParent(self, id):
-		gp = Group.objects.get(pk=id)
-		if gp == None:
+		gp = None
+		try:
+			gp = Group.objects.get(pk=id)
+		except Group.DoesNotExist:
 			return None
+
 		if gp.parentGroup == None:
 			return None
 		pgp = Group.objects.get(pk=gp.parentGroup.id)
