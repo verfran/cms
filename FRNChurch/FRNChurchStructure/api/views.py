@@ -1,14 +1,14 @@
 from rest_framework import viewsets
 from rest_framework import generics
 from django.db.models import Q
-from FRNChurchStructure.models import Group
-from .serializers import GroupSerializer, GroupChildrenSerializer, GroupPathSerializer
+from FRNChurchStructure.models import Group, Christian
+from .serializers import GroupSerializer, GroupChildrenSerializer, GroupPathSerializer, ChristianSerializer, GroupChristiansSerializer
 
 class GroupView(viewsets.ReadOnlyModelViewSet):
 	queryset = Group.objects.all()
 	serializer_class = GroupSerializer
 
-class GroupChildrenView(generics.ListAPIView):
+class GroupGroupsView(generics.ListAPIView):
 	serializer_class = GroupChildrenSerializer
 
 	def get_queryset(self, *args, **kwargs):
@@ -52,3 +52,15 @@ class GroupPathView(generics.ListAPIView):
 			return None
 
 		return Group.objects.filter(query)
+
+
+class ChristianView(viewsets.ReadOnlyModelViewSet):
+	queryset = Christian.objects.all()
+	serializer_class = ChristianSerializer
+
+class GroupChristiansView(generics.ListAPIView):
+	serializer_class = GroupChristiansSerializer
+
+	def get_queryset(self, *args, **kwargs):
+		group_id = self.kwargs['group_id']
+		return Christian.objects.filter(familyGroup_id=group_id)

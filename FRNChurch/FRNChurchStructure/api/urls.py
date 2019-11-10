@@ -1,13 +1,15 @@
 from django.urls import path, include
-from .views import GroupView, GroupChildrenView, GroupPathView
+from .views import GroupView, GroupGroupsView, GroupPathView, ChristianView, GroupChristiansView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register('Group', GroupView)
+router.register('Christian', ChristianView)
 
 urlpatterns = [
 	path('', include(router.urls)),
-	path('GroupChildren/<int:parent_id>', GroupChildrenView.as_view()),
-	path('GroupPath/<int:id>', GroupPathView.as_view()),
+	path('GroupGroups/<int:parent_id>/', GroupGroupsView.as_view()),
+	path('GroupPath/<int:id>/', GroupPathView.as_view()),
+	path('GroupChristians/<int:group_id>/', GroupChristiansView.as_view()),
 ]
 

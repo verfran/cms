@@ -25,6 +25,8 @@ class Person(models.Model):
 
 	dateOfBirth = models.DateField(null=True, blank=True)
 
+	notes = models.TextField(blank=True)
+
 	def __str__(self):
 		return self.firstName + " " + self.secondName
 
