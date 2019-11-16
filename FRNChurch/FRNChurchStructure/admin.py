@@ -10,5 +10,12 @@ class GroupAdmin(ImportExportModelAdmin):
 
 @admin.register(Christian)
 class ChristianAdmin(ImportExportModelAdmin):
-	list_display = ('firstName', 'familyGroup', 'dateOfBaptism')
+	list_display = ('firstName', 'secondName', 'familyGroup', 'gender', 'dateOfBaptism')
 
+@admin.register(Contact)
+class ContactAdmin(ImportExportModelAdmin):
+	list_display = ('phoneNumber', 'email')
+
+@admin.register(Person)
+class PersonAdmin(ImportExportModelAdmin):
+	list_display = ('firstName', 'secondName', 'gender', 'dateOfBirth')
