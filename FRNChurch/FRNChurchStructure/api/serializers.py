@@ -4,9 +4,9 @@ from FRNChurchStructure.models import Group, Christian
 class GroupSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Group
-		fields = ('id', 'name', 'type', 'parentGroup')
+		fields = '__all__'
 
-class GroupChildrenSerializer(serializers.ModelSerializer):
+class GroupGroupsSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Group
 		fields = ('id', 'name', 'type')
@@ -19,9 +19,9 @@ class GroupPathSerializer(serializers.ModelSerializer):
 class ChristianSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Christian
-		fields = ('id', 'firstName', 'secondName', 'gender')
+		fields = '__all__'
 
 class GroupChristiansSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Christian
-		fields = ('id', 'firstName', 'secondName', 'gender', 'dateOfBirth','dateOfBaptism')
+		fields = ('id', 'firstName', 'secondName', 'gender')
