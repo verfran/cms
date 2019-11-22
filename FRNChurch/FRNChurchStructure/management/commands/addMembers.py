@@ -19,6 +19,14 @@ class Command(BaseCommand):
         if not self.isValid(activeSheet[1]):
             return;
 
+        try:
+            rgn = Group.objects.get(name=self.regionName)
+        except Group.DoesNotExist:
+            print("Error: Region not found ", self.regionName)
+            print("Error: Create region without type manually and then try addMembers")
+            return
+
+
         rowCount = activeSheet.max_row
         for rowindex in range(2, rowCount+1):
             self.processRow(activeSheet[rowindex])
@@ -47,7 +55,7 @@ class Command(BaseCommand):
 
     def getChurch(self, chrchName):
         try:
-            region = Group.objects.get(name=self.regionName, type = '')
+            region = Group.objects.get(name=self.regionName)
         except Group.DoesNotExist:
             print("Error: Region not found ", self.regionName)
             return

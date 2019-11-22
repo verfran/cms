@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 class Group(models.Model):
 	name = models.CharField(max_length=80)
-	type = models.CharField(max_length=25)
-	parentGroup = models.ForeignKey('self', on_delete=models.SET_NULL, null = True)
+	type = models.CharField(max_length=25, blank = True, null = True)
+	parentGroup = models.ForeignKey('self', on_delete=models.SET_NULL, blank = True, null = True)
 	#menLeader = models.ForeignKey('FRNChurchStructure.Christian',
 	#	on_delete=models.SET_NULL, null = True)
 	#womenLeader = models.ForeignKey('FRNChurchStructure.Christian',
