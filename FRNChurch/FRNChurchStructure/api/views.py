@@ -8,7 +8,18 @@ from .serializers import GroupSerializer, GroupGroupsSerializer, GroupPathSerial
 
 class GroupDashboardView(APIView):
 	def get(self, request, *args, **kwargs):
-		return Response({"firstkey":"value"})
+		data = {
+			"groupInfo": {"id": 1, "name": "Bangalore", "type": "Church", "memberCount": 300, "menCount": 140, "womenCount": 160},
+       		"parentGroup": {"id": 101, "name": "KAT", "type": "Region"},
+      		"nextGroup": {"id": 131, "name": "Laksandra", "type": "Zone"},
+      		"prevGroup": {"id": 12, "name": "Belekhalli", "type": "Zone"},
+			"groupWomen": [
+				{"id": 102, "name": "Abijah Francis"},
+				{"id": 101, "name": "Anny Francis"}
+				]
+		}
+
+		return Response(data)
 
 class GroupView(viewsets.ReadOnlyModelViewSet):
 	queryset = Group.objects.all()
