@@ -4,19 +4,42 @@ from rest_framework.response import Response
 from rest_framework import generics
 from django.db.models import Q
 from FRNChurchStructure.models import Group, Christian
-from .serializers import GroupSerializer, GroupGroupsSerializer, GroupPathSerializer, ChristianSerializer, GroupChristiansSerializer
+from .serializers import GroupSerializer, ChristianSerializer, GroupChristiansSerializer, DashboardSerializer
 
 class GroupDashboardView(APIView):
 	def get(self, request, *args, **kwargs):
+		id = self.kwargs['id']
+		try:
+			gp = Group.objects.get(pk=id)
+		except Group.DoesNotExist:
+			return Response({})
+	
+		ser = DashboardSerializer(gp)
+		return Response(ser.data)
+
 		data = {
-			"groupInfo": {"id": 1, "name": "Bangalore", "type": "Church", "memberCount": 300, "menCount": 140, "womenCount": 160},
+			"groupInfo": {"id": 1, "name": "Bangalore", "type": "Church", "memberCount": 3000, "menCount": 14, "womenCount": 16},
        		"parentGroup": {"id": 101, "name": "KAT", "type": "Region"},
       		"nextGroup": {"id": 131, "name": "Laksandra", "type": "Zone"},
       		"prevGroup": {"id": 12, "name": "Belekhalli", "type": "Zone"},
-			"groupWomen": [
-				{"id": 102, "name": "Abijah Francis"},
-				{"id": 101, "name": "Anny Francis"}
-				]
+			"members": [
+				{"id": 102, "name": "Verkeys Francis"},
+				{"id": 101, "name": "Srikanth"},
+				{"id": 103, "name": "Anny Francis"},
+				{"id": 104, "name": "Rani Srikanth"}
+				],
+			"men": [
+				{"id": 102, "name": "Verkeys Francis"},
+				{"id": 101, "name": "Srikanth"}
+				],
+			"women": [
+				{"id": 103, "name": "Anny Francis"},
+				{"id": 104, "name": "Rani Srikanth"}
+				],
+			"groupGroups": [
+				{"id": 1023, "name": "Belekhalli", "type": "Family Group"},
+				{"id": 1013, "name": "Kumaraswamy layout", "type": "Family group"}
+				],
 		}
 
 		return Response(data)
@@ -26,14 +49,14 @@ class GroupView(viewsets.ReadOnlyModelViewSet):
 	serializer_class = GroupSerializer
 
 class GroupGroupsView(generics.ListAPIView):
-	serializer_class = GroupGroupsSerializer
+	serializer_class = GroupSerializer
 
 	def get_queryset(self, *args, **kwargs):
 		parent_id = self.kwargs['parent_id']
 		return Group.objects.filter(parentGroup_id=parent_id)
 
 class GroupPathView(generics.ListAPIView):
-	serializer_class = GroupPathSerializer
+	serializer_class = GroupSerializer
 
 	def getParent(self, id):
 		gp = None
